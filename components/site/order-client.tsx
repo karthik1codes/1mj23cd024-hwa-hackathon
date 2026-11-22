@@ -144,7 +144,7 @@ export function OrderClient({ initialPlanId }: { initialPlanId: Plan["id"] }) {
     return errors;
   };
 
-  const startPayment = async (orderToPay: OrderRecord) => {
+  const startPayment = async (orderToPay: OrderRecord, paymentKey?: string | null) => {
     const finish = (success: boolean) => {
       setPendingOrder(null);
       if (success) {
@@ -157,7 +157,7 @@ export function OrderClient({ initialPlanId }: { initialPlanId: Plan["id"] }) {
     };
 
     try {
-      const key = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ?? "";
+      const key = paymentKey || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "";
       if (!key) {
         setSubmitting(false);
         if (typeof window !== "undefined") window.location.assign(RAZORPAY_PAYMENT_URL);
@@ -247,7 +247,8 @@ export function OrderClient({ initialPlanId }: { initialPlanId: Plan["id"] }) {
       }
 
       setPendingOrder(data.order);
-      await startPayment(data.order);
+      const placed = data.order;
+      await startPayment(placed, (data as { razorpayKey?: string | null }).razorpayKey);
     } catch {
       setServerError("Network hiccup. Please check your connection and try again.");
     } finally {

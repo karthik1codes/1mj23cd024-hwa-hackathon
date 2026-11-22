@@ -174,6 +174,7 @@ export async function POST(request: Request) {
       ok: true,
       message: "Order confirmed. Welcome to the pack.",
       order,
+      razorpayKey: process.env.RAZORPAY_API_KEY ?? process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ?? null,
     },
     201,
   );
