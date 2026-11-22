@@ -127,7 +127,7 @@ export function Pricing() {
                       size="lg"
                       className="w-full"
                     >
-                      <Link href={`/order?plan=${plan.id}`}>{plan.cta}</Link>
+                      <Link href={plan.checkoutUrl}>{plan.cta}</Link>
                     </Button>
                     <p className={cn("mt-3 text-center text-[0.68rem]", featured ? "text-cream-100/40" : "text-forest-900/40")}>
                       {plan.note}

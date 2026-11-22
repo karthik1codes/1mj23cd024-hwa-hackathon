@@ -7,13 +7,12 @@ export type Plan = {
   badge?: string;
   featured?: boolean;
   cta: string;
+  checkoutUrl: string;
   includes: string[];
   note: string;
 };
 
 export const CARE_PLUS_PRICE = 6600;
-
-export const RAZORPAY_PAYMENT_URL = "https://rzp.io/rzp/EmkqcKw";
 
 export const plans: Plan[] = [
   {
@@ -22,6 +21,7 @@ export const plans: Plan[] = [
     tagline: "Everything a solo pup needs to feel close to you.",
     price: 42000,
     cta: "Bring home PawPal",
+    checkoutUrl: "https://test.checkout.dodopayments.com/buy/pdt_0NsVvWmxQBkdS4WiRFmNK?quantity=1",
     note: "One robot. One very happy dog.",
     includes: [
       "PawPal companion robot",
@@ -42,6 +42,7 @@ export const plans: Plan[] = [
     badge: "Most loved",
     featured: true,
     cta: "Choose PawPal Pro",
+    checkoutUrl: "https://test.checkout.dodopayments.com/buy/pdt_0NsVwgeJHacBsvk1jmH8W?quantity=1",
     note: "Our best seller for busy dog parents.",
     includes: [
       "Everything in PawPal One",
@@ -61,6 +62,7 @@ export const plans: Plan[] = [
     compareAt: 140000,
     badge: "Best value",
     cta: "Choose the Pack",
+    checkoutUrl: "https://test.checkout.dodopayments.com/buy/pdt_0NsVwpHcd9gEgIFrRF5sL?quantity=1",
     note: "Two robots, one beautifully calm home.",
     includes: [
       "Two PawPal companion robots",

@@ -27,14 +27,17 @@ Open <http://localhost:3000>. Production commands: `npm run build` and `npm run 
 ## Order API
 
 - `POST /api/orders` — accepts JSON or form data, returns `201` with the created order.
-- Plans: `one`, `pro`, `pack`. Promos: `GOODBOY`, `PAW10` (10%), `NEIGHBOUR` (5%). Care+ is $79/year.
+- Plans: `one`, `pro`, `pack`. Promos: `GOODBOY`, `PAW10` (10%), `NEIGHBOUR` (5%). Care+ is ₹6,600/year.
 - Also: `GET /api/orders`, `GET /api/orders/{orderId}`, `POST /api/subscribe`.
 
 ## Payments
 
-The checkout uses Razorpay. Place order creates the order first, then sends the buyer to the
-Razorpay payment page (`https://rzp.io/rzp/EmkqcKw`) or opens the Razorpay checkout modal when
-`NEXT_PUBLIC_RAZORPAY_KEY_ID` is configured.
+Place order creates the order first, then sends the buyer to that plan's Dodo Payments
+checkout link. The pricing buttons link straight to the matching checkout:
+
+- PawPal One — <https://test.checkout.dodopayments.com/buy/pdt_0NsVvWmxQBkdS4WiRFmNK?quantity=1>
+- PawPal Pro — <https://test.checkout.dodopayments.com/buy/pdt_0NsVwgeJHacBsvk1jmH8W?quantity=1>
+- PawPal Pack — <https://test.checkout.dodopayments.com/buy/pdt_0NsVwpHcd9gEgIFrRF5sL?quantity=1>
 
 ## Deploy
 
