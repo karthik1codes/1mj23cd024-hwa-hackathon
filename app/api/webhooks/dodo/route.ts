@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+import { createSupabaseServerClient } from "@/lib/supabase";
+
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
@@ -38,23 +40,51 @@ export async function POST(request: Request) {
   const planId = payload?.data?.planId ?? payload?.metadata?.planId ?? "";
   const status = payload?.data?.status ?? "";
 
-  let handled = false;
+  let orderStatus: string | null = null;
   if (eventType === "payment.failed" || status === "failed") {
-    handled = true;
+    orderStatus = "failed";
   } else if (eventType === "subscription.deleted" || status === "cancelled" || status === "canceled") {
-    handled = true;
+    orderStatus = "cancelled";
   } else if (eventType === "subscription.updated" || eventType === "subscription.created" || status === "active") {
-    handled = true;
+    orderStatus = "confirmed";
+  }
+
+  const supabase = createSupabaseServerClient();
+  let dbError: string | null = null;
+  let updatedOrderId: string | null = null;
+
+  if (userId && planId && orderStatus && supabase) {
+    const { data: orders, error } = await supabase
+      .from("orders")
+      .select("id, status")
+      .eq("user_id", userId)
+      .eq("plan", planId)
+      .order("created_at", { ascending: false });
+
+    const order = (orders ?? [])[0];
+    if (error) {
+      dbError = error.message;
+    } else if (order) {
+      updatedOrderId = String(order.id);
+      const { error: updateError } = await supabase
+        .from("orders")
+        .update({ status: orderStatus })
+        .eq("id", order.id);
+      if (updateError) dbError = updateError.message;
+    }
   }
 
   return NextResponse.json(
     {
       ok: true,
-      handled,
+      handled: Boolean(orderStatus),
       eventType,
       userId: userId || null,
       planId: planId || null,
       status: status || null,
+      orderStatus,
+      updatedOrderId,
+      dbError,
     },
     { status: 200 },
   );
