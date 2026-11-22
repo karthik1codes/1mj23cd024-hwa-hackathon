@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { CARE_PLUS_PRICE, orderPromos, plans } from "@/lib/content";
 import type { OrderCustomer, OrderRecord } from "@/lib/order-types";
 import { deliveryEstimate, makeOrderId, orderCount, saveOrder } from "@/lib/orders";
+import { createSupabaseServerClient } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -169,12 +170,46 @@ export async function POST(request: Request) {
     /* the order is still confirmed for the client; storage is best-effort */
   }
 
+  const supabase = createSupabaseServerClient();
+  if (supabase) {
+    try {
+      const { data: userRow } = await supabase
+        .from("users")
+        .upsert({ email: customer.email }, { onConflict: "email" })
+        .select("id")
+        .single();
+      const userId = userRow?.id ?? null;
+      await supabase.from("orders").insert({
+        id: order.id,
+        user_id: userId,
+        plan: plan.id,
+        quantity,
+        subtotal: order.totals.subtotal,
+        discount: order.totals.discount,
+        add_on: order.totals.addOn,
+        shipping: order.totals.shipping,
+        total: order.totals.total,
+        promo: order.promo,
+        status: order.status,
+        created_at: order.createdAt,
+        customer_name: customer.name,
+        customer_email: customer.email,
+        customer_phone: customer.phone ?? null,
+        customer_address: customer.address,
+        customer_city: customer.city,
+        customer_postal_code: customer.postalCode,
+        customer_country: customer.country,
+      });
+    } catch {
+      /* Supabase persistence is best-effort as well */
+    }
+  }
+
   return json(
     {
       ok: true,
       message: "Order confirmed. Welcome to the pack.",
       order,
-      razorpayKey: process.env.RAZORPAY_API_KEY ?? process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ?? null,
     },
     201,
   );
