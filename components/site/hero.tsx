@@ -136,6 +136,16 @@ export function Hero() {
             style={{ animationDelay: "180ms", animationFillMode: "both" }}
           >
             <HeroScene />
+            <video
+              src="/pawpal.mp4"
+              className="absolute -z-10 inset-0 h-full w-full rounded-[2rem] bg-cream-200 object-cover sm:rounded-[2.5rem]"
+              autoPlay
+              muted
+              playsInline
+              loop
+              preload="auto"
+              aria-hidden="true"
+            />
           </div>
         </div>
 
