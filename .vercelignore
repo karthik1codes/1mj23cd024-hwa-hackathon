@@ -1,0 +1,9 @@
+.hwa
+init.py
+init (*).py
+submit.py
+hwa-start.*
+
+.next
+.env*
+opencode.json
