@@ -88,12 +88,25 @@ function TreatCard() {
   );
 }
 
-export function HeroScene({ className }: { className?: string }) {
+export function HeroScene({ className, videoSrc }: { className?: string; videoSrc?: string }) {
   return (
     <div className={cn("relative", className)}>
       <div className="absolute -inset-6 -z-10 rounded-[3rem] bg-[radial-gradient(70%_70%_at_70%_30%,rgba(240,138,75,0.28),transparent_70%)] blur-2xl" />
 
       <div className="relative overflow-hidden rounded-[2rem] border border-white/70 bg-cream-200 shadow-lift sm:rounded-[2.5rem]">
+        {videoSrc ? (
+          <video
+            src={videoSrc}
+            className="block aspect-[13/11] w-full object-cover"
+            autoPlay
+            muted
+            playsInline
+            loop
+            preload="auto"
+            aria-label="PawPal robot playing with a dog in a sunlit living room"
+          />
+        ) : null}
+        {!videoSrc && (
         <svg
           viewBox="0 0 780 660"
           className="block h-auto w-full"
@@ -439,6 +452,7 @@ export function HeroScene({ className }: { className?: string }) {
 
           <rect width="780" height="660" fill="url(#hero-vignette)" />
         </svg>
+        )}
 
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute left-3 top-4 animate-float sm:left-5 sm:top-6">

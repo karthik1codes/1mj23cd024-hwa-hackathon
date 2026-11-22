@@ -14,6 +14,7 @@ import { PawMark } from "@/components/brand/logo";
 import { HeroScene } from "@/components/site/hero-scene";
 import { WatchFilm } from "@/components/site/watch-film";
 import { Button } from "@/components/ui/button";
+import heroVideo from "../../pawpal.mp4";
 
 const proof = [
   { initials: "PS", className: "bg-ember-200 text-ember-700" },
@@ -135,17 +136,7 @@ export function Hero() {
             className="animate-in fade-in zoom-in-95 relative mt-2 duration-1000 sm:mt-0"
             style={{ animationDelay: "180ms", animationFillMode: "both" }}
           >
-            <HeroScene />
-            <video
-              src="/pawpal.mp4"
-              className="absolute -z-10 inset-0 h-full w-full rounded-[2rem] bg-cream-200 object-cover sm:rounded-[2.5rem]"
-              autoPlay
-              muted
-              playsInline
-              loop
-              preload="auto"
-              aria-hidden="true"
-            />
+            <HeroScene videoSrc={heroVideo} />
           </div>
         </div>
 

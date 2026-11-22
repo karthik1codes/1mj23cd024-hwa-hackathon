@@ -134,16 +134,6 @@ export function WatchFilm({ className }: { className?: string }) {
 
         <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-forest-950 shadow-lift">
           <div className="relative aspect-[4/5] w-full overflow-hidden sm:aspect-video">
-            <video
-              src="/pawpal.mp4"
-              className="absolute inset-0 h-full w-full object-cover"
-              autoPlay
-              muted
-              playsInline
-              loop
-              preload="auto"
-              aria-hidden="true"
-            />
             <div className="absolute inset-0 bg-[radial-gradient(120%_100%_at_50%_0%,#1E5C45_0%,#0B2B20_55%,#071F17_100%)]" />
             <div className="absolute inset-0 opacity-[0.07] [background-image:radial-gradient(rgba(255,255,255,0.9)_1px,transparent_1px)] [background-size:26px_26px]" />
             <div className="absolute -left-16 top-1/4 size-72 rounded-full bg-ember-500/20 blur-3xl" />
