@@ -12,3 +12,5 @@ dist/
 
 .next/
 opencode.json
+
+tsconfig.tsbuildinfo
