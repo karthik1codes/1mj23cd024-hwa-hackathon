@@ -65,7 +65,7 @@ export async function GET() {
   return json({
     ok: true,
     service: "PawPal orders API",
-    currency: "USD",
+    currency: "INR",
     orderCount: count,
     endpoints: {
       create: "POST /api/orders",

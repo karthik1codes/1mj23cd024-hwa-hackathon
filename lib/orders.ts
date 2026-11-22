@@ -82,7 +82,7 @@ export function makeOrderId() {
 export function deliveryEstimate(days = 6) {
   const date = new Date();
   date.setDate(date.getDate() + days);
-  return new Intl.DateTimeFormat("en-US", {
+  return new Intl.DateTimeFormat("en-IN", {
     weekday: "short",
     month: "short",
     day: "numeric",

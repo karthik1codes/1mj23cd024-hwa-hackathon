@@ -26,9 +26,35 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CARE_PLUS_PRICE, orderPromos, plans, type Plan } from "@/lib/content";
+import { CARE_PLUS_PRICE, orderPromos, plans, RAZORPAY_PAYMENT_URL, type Plan } from "@/lib/content";
 import type { OrderRecord } from "@/lib/order-types";
 import { cn, formatPrice } from "@/lib/utils";
+
+type RazorpayInstance = {
+  open: () => void;
+  on?: (event: string, handler: (response: unknown) => void) => void;
+};
+type RazorpayConstructor = new (options: Record<string, unknown>) => RazorpayInstance;
+
+let razorpayLoader: Promise<RazorpayConstructor | null> | null = null;
+
+function loadRazorpay(): Promise<RazorpayConstructor | null> {
+  if (razorpayLoader) return razorpayLoader;
+  razorpayLoader = new Promise((resolve) => {
+    const w = window as Window & { Razorpay?: RazorpayConstructor };
+    if (w.Razorpay) {
+      resolve(w.Razorpay);
+      return;
+    }
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    script.onload = () => resolve((window as Window & { Razorpay?: RazorpayConstructor }).Razorpay ?? null);
+    script.onerror = () => resolve(null);
+    document.head.appendChild(script);
+  });
+  return razorpayLoader;
+}
 
 const countries = [
   "India",
@@ -92,7 +118,9 @@ export function OrderClient({ initialPlanId }: { initialPlanId: Plan["id"] }) {
   const [serverError, setServerError] = React.useState("");
   const [submitting, setSubmitting] = React.useState(false);
   const [order, setOrder] = React.useState<OrderRecord | null>(null);
+  const [pendingOrder, setPendingOrder] = React.useState<OrderRecord | null>(null);
   const [copied, setCopied] = React.useState(false);
+  const [paymentState, setPaymentState] = React.useState<"idle" | "success" | "cancelled" | "error">("idle");
 
   const plan = plans.find((item) => item.id === planId) ?? plans[1];
   const promoRate = orderPromos[promo.trim().toUpperCase()] ?? 0;
@@ -114,6 +142,62 @@ export function OrderClient({ initialPlanId }: { initialPlanId: Plan["id"] }) {
     if (fields.city.trim().length < 2) errors.city = "Enter a city.";
     if (fields.postalCode.trim().length < 3) errors.postalCode = "Enter a postal code.";
     return errors;
+  };
+
+  const startPayment = async (orderToPay: OrderRecord) => {
+    const finish = (success: boolean) => {
+      setPendingOrder(null);
+      if (success) {
+        setOrder({ ...orderToPay, status: "confirmed" } as OrderRecord);
+        setPaymentState("success");
+      } else {
+        setOrder(null);
+      }
+      setSubmitting(false);
+    };
+
+    try {
+      const key = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ?? "";
+      if (!key) {
+        setSubmitting(false);
+        if (typeof window !== "undefined") window.location.assign(RAZORPAY_PAYMENT_URL);
+        return;
+      }
+
+      const Razorpay = await loadRazorpay();
+      if (!Razorpay) {
+        setSubmitting(false);
+        if (typeof window !== "undefined") window.location.assign(RAZORPAY_PAYMENT_URL);
+        return;
+      }
+
+      const rzp = new Razorpay({
+        key,
+        amount: Math.round(orderToPay.totals.total * 100),
+        currency: "INR",
+        name: "PawPal",
+        description: `PawPal order ${orderToPay.id}`,
+        prefill: { name: fields.name, email: fields.email },
+        theme: { color: "#1E5C45" },
+        handler: async () => {
+          finish(true);
+        },
+        modal: {
+          ondismiss: () => {
+            finish(false);
+          },
+        },
+      });
+
+      rzp.on?.("payment.failed", () => {
+        finish(false);
+      });
+
+      setSubmitting(false);
+      rzp.open();
+    } catch {
+      finish(false);
+    }
   };
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -162,8 +246,8 @@ export function OrderClient({ initialPlanId }: { initialPlanId: Plan["id"] }) {
         return;
       }
 
-      setOrder(data.order);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      setPendingOrder(data.order);
+      await startPayment(data.order);
     } catch {
       setServerError("Network hiccup. Please check your connection and try again.");
     } finally {
@@ -195,7 +279,7 @@ export function OrderClient({ initialPlanId }: { initialPlanId: Plan["id"] }) {
               <Check className="size-8" strokeWidth={3} />
             </span>
             <p className="relative mt-5 text-[0.6rem] font-bold uppercase tracking-[0.2em] text-ember-300">
-              Order confirmed
+              Payment successful
             </p>
             <h1 className="relative mt-2 font-display text-3xl font-semibold text-cream-50 sm:text-4xl">
               You&apos;re all set, {order.customer.name.split(" ")[0]}.
@@ -287,7 +371,7 @@ export function OrderClient({ initialPlanId }: { initialPlanId: Plan["id"] }) {
               </Button>
             </div>
             <p className="mt-4 text-center text-[0.7rem] text-forest-900/40">
-              This is a preview store — no payment has been taken.
+              Payment of {formatPrice(order.totals.total)} received via Razorpay for order {order.id}.
             </p>
           </div>
         </div>
@@ -631,11 +715,11 @@ export function OrderClient({ initialPlanId }: { initialPlanId: Plan["id"] }) {
             )}
             <Button type="submit" variant="accent" size="lg" className="w-full" disabled={submitting}>
               {submitting ? <Loader2 className="animate-spin" /> : <Lock />}
-              {submitting ? "Placing order…" : `Place order · ${formatPrice(total)}`}
+              {submitting ? "Placing order…" : `Pay · ${formatPrice(total)}`}
             </Button>
             <div className="mt-3 flex items-center justify-center gap-1.5 text-[0.68rem] text-forest-900/40">
               <ShieldCheck className="size-3.5" />
-              Secure checkout · no payment taken
+              Secure checkout · via Razorpay
             </div>
 
             <div className="mt-5 space-y-2.5 border-t border-forest-900/10 pt-4">
@@ -654,8 +738,8 @@ export function OrderClient({ initialPlanId }: { initialPlanId: Plan["id"] }) {
         </div>
 
         <p className="mt-4 px-2 text-center text-[0.7rem] leading-relaxed text-forest-900/40">
-          This is a preview store for PawPal. Placing an order confirms it
-          instantly and saves it to our demo order service — no card is charged.
+          This is a preview store for PawPal. The order is confirmed through
+          Razorpay — no card details are stored.
         </p>
       </aside>
     </form>

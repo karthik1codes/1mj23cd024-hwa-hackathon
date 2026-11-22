@@ -9,7 +9,7 @@ const sections = [
   {
     title: "Buying PawPal",
     body: [
-      "Prices are shown in US dollars and include applicable taxes unless stated otherwise. We accept major cards, Apple Pay and Google Pay at launch. An order is confirmed when you receive an order number from us.",
+      "Prices are shown in Indian rupees (INR) and include applicable taxes unless stated otherwise. We accept major cards, UPI, Apple Pay and Google Pay at launch. An order is confirmed when you receive an order number from us.",
       "We may limit quantities for household use. PawPal is a consumer companion robot, not a medical device or a substitute for training, exercise or veterinary care.",
     ],
   },

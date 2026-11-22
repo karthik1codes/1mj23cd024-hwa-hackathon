@@ -30,6 +30,12 @@ Open <http://localhost:3000>. Production commands: `npm run build` and `npm run 
 - Plans: `one`, `pro`, `pack`. Promos: `GOODBOY`, `PAW10` (10%), `NEIGHBOUR` (5%). Care+ is $79/year.
 - Also: `GET /api/orders`, `GET /api/orders/{orderId}`, `POST /api/subscribe`.
 
+## Payments
+
+The checkout uses Razorpay. Place order creates the order first, then sends the buyer to the
+Razorpay payment page (`https://rzp.io/rzp/EmkqcKw`) or opens the Razorpay checkout modal when
+`NEXT_PUBLIC_RAZORPAY_KEY_ID` is configured.
+
 ## Deploy
 
 ```bash

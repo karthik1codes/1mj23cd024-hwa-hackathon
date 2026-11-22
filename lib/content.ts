@@ -11,14 +11,16 @@ export type Plan = {
   note: string;
 };
 
-export const CARE_PLUS_PRICE = 79;
+export const CARE_PLUS_PRICE = 6600;
+
+export const RAZORPAY_PAYMENT_URL = "https://rzp.io/rzp/EmkqcKw";
 
 export const plans: Plan[] = [
   {
     id: "one",
     name: "PawPal One",
     tagline: "Everything a solo pup needs to feel close to you.",
-    price: 499,
+    price: 42000,
     cta: "Bring home PawPal",
     note: "One robot. One very happy dog.",
     includes: [
@@ -35,8 +37,8 @@ export const plans: Plan[] = [
     id: "pro",
     name: "PawPal Pro",
     tagline: "Every companion feature, with room to grow.",
-    price: 699,
-    compareAt: 799,
+    price: 70000,
+    compareAt: 80000,
     badge: "Most loved",
     featured: true,
     cta: "Choose PawPal Pro",
@@ -55,8 +57,8 @@ export const plans: Plan[] = [
     id: "pack",
     name: "PawPal Pack",
     tagline: "For multi-dog homes and very busy tails.",
-    price: 1199,
-    compareAt: 1398,
+    price: 120000,
+    compareAt: 140000,
     badge: "Best value",
     cta: "Choose the Pack",
     note: "Two robots, one beautifully calm home.",
