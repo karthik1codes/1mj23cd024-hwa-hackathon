@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight, ScanFace, SlidersHorizontal, Sunrise, ToyBrick } from "lucide-react";
 
-import { PhoneMockup } from "@/components/site/phone-mockup";
 import { Reveal } from "@/components/site/reveal";
 import { Button } from "@/components/ui/button";
 
@@ -102,7 +101,8 @@ export function HowItWorks() {
           </div>
 
           <Reveal delay={180} className="relative lg:sticky lg:top-28">
-            <PhoneMockup />
+            {/* phone reference image */}
+            <img src="/phone.png" alt="The PawPal app on a phone, from hello to goodnight" className="h-auto w-full rounded-[2rem] border border-white/15 bg-forest-950 object-cover shadow-lift" />
             <p className="mt-8 text-center text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-forest-900/40">
               The PawPal app · included with every robot
             </p>
