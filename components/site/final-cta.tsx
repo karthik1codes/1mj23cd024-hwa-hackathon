@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Check, ShoppingBag, Sparkles } from "lucide-react";
+import { Check, ShoppingBag, Sparkles, Star } from "lucide-react";
 
 import { PawMark } from "@/components/brand/logo";
 import { Reveal } from "@/components/site/reveal";
@@ -63,8 +63,11 @@ export function FinalCta() {
                 </div>
               </div>
 
-              {/* best day reference image */}
-              <img src="/best-day.png" alt="Their best day starts while you are away" className="h-auto w-full rounded-[2rem] border border-white/15 bg-forest-950 object-cover shadow-lift" />
+              <img
+                src="/best-day.png"
+                alt="Their best day starts while you're away"
+                className="h-auto w-full max-h-96 rounded-[2rem] border border-white/10 bg-forest-900/60 object-cover shadow-lift"
+              />
             </div>
           </div>
         </Reveal>
