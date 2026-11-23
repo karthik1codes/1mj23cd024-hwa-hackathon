@@ -26,87 +26,6 @@ const problems = [
   },
 ];
 
-function WaitingWindow() {
-  return (
-    <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-forest-900/60 p-3 shadow-lift">
-      <svg viewBox="0 0 420 330" className="block h-auto w-full rounded-[1.5rem]" role="img" aria-label="A quiet room with rain at the window, a leash and a waiting ball">
-        <defs>
-          <linearGradient id="wait-room" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#123B2C" />
-            <stop offset="1" stopColor="#082018" />
-          </linearGradient>
-          <linearGradient id="wait-sky" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#5F8A78" />
-            <stop offset="1" stopColor="#9DB8A4" />
-          </linearGradient>
-          <linearGradient id="wait-light" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#F6E3BC" stopOpacity="0.55" />
-            <stop offset="1" stopColor="#F6E3BC" stopOpacity="0" />
-          </linearGradient>
-          <clipPath id="wait-arch">
-            <path d="M150 250 L150 138 A60 60 0 0 1 270 138 L270 250 Z" />
-          </clipPath>
-        </defs>
-        <rect width="420" height="330" fill="url(#wait-room)" />
-        <rect y="248" width="420" height="82" fill="#071F17" />
-        <path d="M150 250 L150 138 A60 60 0 0 1 270 138 L270 250 Z" fill="url(#wait-sky)" />
-        <g clipPath="url(#wait-arch)">
-          <circle cx="236" cy="120" r="16" fill="#F7E9CB" opacity="0.9" />
-          <path d="M120 200 C150 178 190 186 214 200 C238 214 272 200 300 188 L300 260 L120 260 Z" fill="#41685A" opacity="0.75" />
-          <g stroke="#DCEBE0" strokeWidth="2" strokeLinecap="round" opacity="0.5">
-            <path d="M168 140 L160 168" />
-            <path d="M190 120 L182 150" />
-            <path d="M216 146 L208 174" />
-            <path d="M242 126 L234 154" />
-            <path d="M180 190 L172 218" />
-            <path d="M226 186 L218 214" />
-            <path d="M252 166 L244 194" />
-          </g>
-        </g>
-        <path d="M150 250 L150 138 A60 60 0 0 1 270 138 L270 250 Z" fill="none" stroke="#F6EBD8" strokeWidth="7" />
-        <path d="M210 78 L210 250" stroke="#F6EBD8" strokeWidth="4" opacity="0.9" />
-        <path d="M150 180 L270 180" stroke="#F6EBD8" strokeWidth="4" opacity="0.9" />
-        <path d="M138 250 L282 250 L282 258 L138 258 Z" fill="#F6EBD8" />
-        <path d="M150 260 L270 260 L320 330 L100 330 Z" fill="url(#wait-light)" />
-
-        {/* leash on hook */}
-        <g>
-          <circle cx="344" cy="128" r="4" fill="#C98A5B" />
-          <path d="M344 132 C344 168 328 176 334 210 C338 234 348 246 344 268" stroke="#C98A5B" strokeWidth="5" fill="none" strokeLinecap="round" />
-          <path d="M334 268 C330 280 340 288 350 282" stroke="#C98A5B" strokeWidth="5" fill="none" strokeLinecap="round" />
-        </g>
-
-        {/* bowl */}
-        <g>
-          <ellipse cx="92" cy="294" rx="34" ry="9" fill="#04120D" opacity="0.6" />
-          <path d="M62 282 L122 282 L116 300 C114 305 106 307 92 307 C78 307 70 305 68 300 Z" fill="#D9C9AE" />
-          <ellipse cx="92" cy="282" rx="30" ry="7" fill="#164936" />
-          <ellipse cx="92" cy="283" rx="22" ry="4.5" fill="#7FB6C9" opacity="0.7" />
-        </g>
-
-        {/* ball */}
-        <circle cx="214" cy="292" r="13" fill="#D65E1E" />
-        <path d="M203 287 C210 294 218 297 224 294" stroke="#FBE7C4" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-
-        {/* clock */}
-        <g>
-          <circle cx="66" cy="86" r="22" fill="#F6EBD8" opacity="0.92" />
-          <circle cx="66" cy="86" r="22" fill="none" stroke="#C98A5B" strokeWidth="3" />
-          <path d="M66 74 L66 87 L76 92" stroke="#0B2B20" strokeWidth="3" fill="none" strokeLinecap="round" />
-        </g>
-      </svg>
-
-      <div className="pointer-events-none absolute inset-x-5 bottom-5 flex items-center justify-between rounded-2xl border border-white/10 bg-forest-950/60 px-4 py-3 backdrop-blur">
-        <div className="flex items-center gap-2 text-cream-100/70">
-          <Timer className="size-4 text-ember-300" />
-          <span className="text-[0.62rem] font-bold uppercase tracking-[0.16em]">The quiet hours</span>
-        </div>
-        <span className="font-display text-lg text-cream-50">2:41 pm</span>
-      </div>
-    </div>
-  );
-}
-
 export function Problem() {
   return (
     <section className="relative overflow-hidden bg-forest-950 py-20 text-cream-100 sm:py-28">
@@ -139,7 +58,8 @@ export function Problem() {
           </div>
 
           <Reveal delay={200} className="lg:pl-6">
-            <WaitingWindow />
+            {/* hardest part reference image */}
+            <img src="/hardest-part.png" alt="A quiet room where a dog waits by the window while their person is away" className="h-auto w-full rounded-[2rem] border border-white/10 bg-forest-900/60 object-cover shadow-lift" />
           </Reveal>
         </div>
 
