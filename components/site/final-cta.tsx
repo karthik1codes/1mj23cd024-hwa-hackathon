@@ -1,65 +1,11 @@
 import Link from "next/link";
-import { Check, ShoppingBag, Sparkles, Star } from "lucide-react";
+import { Check, ShoppingBag, Sparkles } from "lucide-react";
 
 import { PawMark } from "@/components/brand/logo";
 import { Reveal } from "@/components/site/reveal";
 import { Button } from "@/components/ui/button";
 
 const checks = ["Free shipping", "30-night trial", "No subscription"];
-
-function PeekingRobot() {
-  return (
-    <div className="relative hidden h-full min-h-[22rem] items-end justify-center lg:flex">
-      <div className="absolute bottom-10 left-6 animate-float rounded-2xl border border-white/15 bg-white/10 px-4 py-2.5 backdrop-blur">
-        <p className="text-[0.55rem] font-bold uppercase tracking-[0.16em] text-ember-300">PawPal says</p>
-        <p className="mt-0.5 font-display text-lg text-cream-50">Ready when you are.</p>
-      </div>
-
-      <div className="absolute bottom-24 right-4 animate-float-slow text-ember-300/60">
-        <PawMark className="size-8" />
-      </div>
-      <div className="absolute right-24 top-10 animate-float text-ember-300/30" style={{ animationDelay: "1.2s" }}>
-        <PawMark className="size-5" />
-      </div>
-
-      <div className="relative w-[19rem] translate-y-14 rotate-[-7deg]">
-        <div className="mx-auto mb-1 h-10 w-1.5 rounded-full bg-white/30">
-          <span className="absolute -top-1 left-1/2 size-4 -translate-x-1/2 rounded-full bg-ember-400 shadow-[0_0_26px_8px_rgba(240,138,75,0.5)]" />
-        </div>
-        <div className="relative">
-          <span className="absolute -left-3 top-20 z-0 h-20 w-4 rounded-full bg-[#F8F4EC]" />
-          <span className="absolute -right-3 top-20 z-0 h-20 w-4 rounded-full bg-[#F8F4EC]" />
-          <div className="relative z-10 rounded-[4rem] border border-white/40 bg-gradient-to-br from-white via-[#F8F4EC] to-[#D9D2C4] p-4 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.6)]">
-            <div className="relative overflow-hidden rounded-[3rem] bg-gradient-to-b from-[#174535] to-[#071F17] px-6 pb-8 pt-10">
-              <div className="flex items-center justify-center gap-9">
-                <span className="animate-blink block h-10 w-5 rounded-full bg-ember-300 shadow-[0_0_22px_rgba(246,169,110,0.7)]" style={{ animationDuration: "6s" }} />
-                <span className="animate-blink block h-10 w-5 rounded-full bg-ember-300 shadow-[0_0_22px_rgba(246,169,110,0.7)]" style={{ animationDuration: "6s" }} />
-              </div>
-              <div className="mx-auto mt-5 h-2 w-14 rounded-full bg-ember-300/80" />
-              <span className="absolute right-5 top-5 size-2 rounded-full bg-forest-300" />
-            </div>
-            <div className="mt-4 rounded-[2.2rem] bg-[#FBF5E9] p-4">
-              <div className="flex items-center justify-center gap-4">
-                <span className="grid size-11 place-items-center rounded-full bg-forest-900 text-cream-50">
-                  <PawMark className="size-5" />
-                </span>
-                <span className="grid size-11 place-items-center rounded-full bg-ember-400 text-forest-950">
-                  <Star className="size-4 fill-current" />
-                </span>
-                <span className="grid size-11 place-items-center rounded-full bg-forest-900 text-cream-50">
-                  <Sparkles className="size-4" />
-                </span>
-              </div>
-              <p className="mt-3 text-center text-[0.5rem] font-bold uppercase tracking-[0.2em] text-forest-900/30">
-                PawPal
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export function FinalCta() {
   return (
@@ -117,7 +63,8 @@ export function FinalCta() {
                 </div>
               </div>
 
-              <PeekingRobot />
+              {/* best day reference image */}
+              <img src="/best-day.png" alt="Their best day starts while you are away" className="h-auto w-full rounded-[2rem] border border-white/15 bg-forest-950 object-cover shadow-lift" />
             </div>
           </div>
         </Reveal>
