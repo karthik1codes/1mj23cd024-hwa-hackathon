@@ -86,7 +86,7 @@ export function OrderClient({ initialPlanId }: { initialPlanId: Plan["id"] }) {
   const [planId, setPlanId] = React.useState<Plan["id"]>(initialPlanId);
   const [quantity, setQuantity] = React.useState(1);
   const [addOn, setAddOn] = React.useState(false);
-  const [promo, setPromo] = React.useState("");
+  const [promo] = React.useState("GOODBOY");
   const [fields, setFields] = React.useState<Fields>(emptyFields);
   const [fieldErrors, setFieldErrors] = React.useState<Record<string, string>>({});
   const [serverError, setServerError] = React.useState("");
@@ -277,7 +277,6 @@ export function OrderClient({ initialPlanId }: { initialPlanId: Plan["id"] }) {
                 className="flex-1"
                 onClick={() => {
                   setOrder(null);
-                  setPromo("");
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
               >
@@ -514,66 +513,7 @@ export function OrderClient({ initialPlanId }: { initialPlanId: Plan["id"] }) {
           </div>
         </section>
 
-        <section aria-labelledby="step-extras" className="mt-5 rounded-[1.75rem] border border-forest-900/10 bg-cream-50 p-5 shadow-soft sm:p-6">
-          <div className="flex items-center gap-3">
-            <span className="grid size-7 place-items-center rounded-full bg-forest-900 text-[0.65rem] font-bold text-cream-50">03</span>
-            <h2 id="step-extras" className="font-display text-xl font-semibold text-forest-950">The little extras</h2>
-          </div>
 
-          <label
-            htmlFor="care-plus"
-            className={cn(
-              "mt-4 flex cursor-pointer items-start gap-3 rounded-2xl border p-4 transition-colors",
-              addOn ? "border-ember-400/60 bg-ember-50" : "border-forest-900/10 bg-cream-100/50 hover:border-forest-900/25",
-            )}
-          >
-            <input
-              id="care-plus"
-              type="checkbox"
-              checked={addOn}
-              onChange={(event) => setAddOn(event.target.checked)}
-              className="mt-0.5 size-4 shrink-0 accent-[#E8762F]"
-            />
-            <span className="flex-1">
-              <span className="flex flex-wrap items-center justify-between gap-2">
-                <span className="text-[0.85rem] font-bold text-forest-950">Add PawPal Care+</span>
-                <span className="text-[0.8rem] font-semibold text-forest-900/70">+{formatPrice(CARE_PLUS_PRICE)} / year</span>
-              </span>
-              <span className="mt-1 block text-[0.75rem] leading-relaxed text-forest-900/50">
-                Accidental damage cover, priority human support and a two-year
-                extended warranty. Cancel anytime.
-              </span>
-            </span>
-          </label>
-
-          <div className="mt-4">
-            <Label htmlFor="promo">Promo code <span className="font-normal normal-case tracking-normal text-forest-900/35">(optional)</span></Label>
-            <div className="mt-1.5 flex gap-2">
-              <Input
-                id="promo"
-                value={promo}
-                onChange={(event) => setPromo(event.target.value.toUpperCase())}
-                placeholder="GOODBOY"
-                className="uppercase"
-                aria-describedby="promo-hint"
-              />
-              <button
-                type="button"
-                onClick={() => setPromo("GOODBOY")}
-                className="shrink-0 rounded-2xl border border-dashed border-ember-400/60 bg-ember-50 px-4 text-[0.7rem] font-bold uppercase tracking-[0.1em] text-ember-700 transition-colors hover:bg-ember-100"
-              >
-                Use GOODBOY
-              </button>
-            </div>
-            <p id="promo-hint" className={cn("mt-1.5 text-[0.72rem]", promoRate > 0 ? "font-semibold text-forest-700" : "text-forest-900/40")}>
-              {promoRate > 0
-                ? `${promo.trim().toUpperCase()} applied — ${Math.round(promoRate * 100)}% off your robot.`
-                : promo.trim()
-                  ? "That code isn't active right now. Try GOODBOY."
-                  : "Try GOODBOY for 10% off your first robot."}
-            </p>
-          </div>
-        </section>
       </div>
 
       <aside className="lg:sticky lg:top-28 lg:self-start">
