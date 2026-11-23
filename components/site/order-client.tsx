@@ -364,36 +364,6 @@ export function OrderClient({ initialPlanId }: { initialPlanId: Plan["id"] }) {
             </div>
           </fieldset>
 
-          <div className="mt-5 flex flex-wrap items-center justify-between gap-4 border-t border-forest-900/10 pt-4">
-            <div>
-              <p className="text-[0.78rem] font-semibold text-forest-950">Quantity</p>
-              <p className="text-[0.68rem] text-forest-900/45">One robot per dog works best.</p>
-            </div>
-            <div className="flex items-center gap-1 rounded-full border border-forest-900/15 bg-cream-100 p-1">
-              <button
-                type="button"
-                onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                aria-label="Decrease quantity"
-                className="grid size-9 place-items-center rounded-full text-forest-900 transition-colors hover:bg-cream-300 disabled:opacity-30"
-                disabled={quantity <= 1}
-              >
-                <Minus className="size-4" />
-              </button>
-              <span aria-live="polite" className="w-8 text-center text-sm font-bold text-forest-950">
-                {quantity}
-              </span>
-              <button
-                type="button"
-                onClick={() => setQuantity((q) => Math.min(5, q + 1))}
-                aria-label="Increase quantity"
-                className="grid size-9 place-items-center rounded-full text-forest-900 transition-colors hover:bg-cream-300 disabled:opacity-30"
-                disabled={quantity >= 5}
-              >
-                <Plus className="size-4" />
-              </button>
-            </div>
-          </div>
-          <FieldError id="quantity-error" message={fieldErrors.quantity} />
         </section>
 
         <section aria-labelledby="step-details" className="mt-5 rounded-[1.75rem] border border-forest-900/10 bg-cream-50 p-5 shadow-soft sm:p-6">
@@ -526,7 +496,6 @@ export function OrderClient({ initialPlanId }: { initialPlanId: Plan["id"] }) {
               </span>
               <div>
                 <p className="font-display text-lg font-semibold leading-tight text-forest-950">{plan.name}</p>
-                <p className="text-[0.7rem] text-forest-900/50">Qty {quantity} · free shipping</p>
               </div>
             </div>
           </div>
