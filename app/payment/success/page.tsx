@@ -4,6 +4,7 @@ import { Check, ShieldCheck } from "lucide-react";
 
 import { Logo } from "@/components/brand/logo";
 import { createSupabaseServerClient } from "@/lib/supabase";
+import { Card } from "@/components/ui/card";
 
 export const dynamic = "force-dynamic";
 
@@ -75,13 +76,13 @@ export default async function PaymentSuccessPage({ searchParams }: { searchParam
           <div className="paw-pattern absolute inset-x-0 bottom-0 h-64 opacity-25 [mask-image:linear-gradient(to_top,black,transparent)]" />
         </div>
         <div className="container">
-          <div className="mx-auto max-w-2xl rounded-[2rem] border border-forest-900/10 bg-cream-50 p-8 text-center shadow-lift sm:p-12">
+          <Card className="mx-auto max-w-2xl rounded-[2rem] border border-forest-900/10 bg-cream-50 p-8 text-center shadow-lift sm:p-12">
             <span className="mx-auto grid size-16 place-items-center rounded-full bg-ember-400 text-forest-950">
               <Check className="size-8" strokeWidth={3} />
             </span>
             <p className="mt-5 text-[0.6rem] font-bold uppercase tracking-[0.2em] text-ember-300">Payment confirmed</p>
-            <h1 className="mt-2 font-display text-3xl font-semibold text-forest-950 sm:text-4xl">You&apos;re all set{userEmail ? `, ${userEmail.split("@")[0]}` : ""}.</h1>
-            <p className="mt-2 text-[0.9rem] text-forest-900/60">Your PawPal order was verified and is being packed with care.</p>
+            <h1 className="mt-2 font-display text-3xl font-semibold text-forest-950 sm:text-4xl">Thank you for your purchase{userEmail ? `, ${userEmail.split("@")[0]}` : ""}.</h1>
+            <p className="mt-2 text-[0.9rem] text-forest-900/60">Thank you for purchasing your PawPal — your order {String(orderDetails?.id ?? "")} was verified and is being packed with care.</p>
             <div className="mt-6 space-y-2 rounded-2xl bg-cream-100 p-5 text-left">
               <div className="flex items-center justify-between text-sm">
                 <span className="text-forest-900/60">{item ? String(item.name) : "PawPal order"}</span>
@@ -91,7 +92,7 @@ export default async function PaymentSuccessPage({ searchParams }: { searchParam
             <Link href="/" className="mt-8 inline-flex items-center gap-1.5 rounded-full bg-forest-900 px-5 py-2.5 text-[0.8rem] font-semibold text-cream-50 transition-colors hover:bg-forest-950">
               Back to PawPal
             </Link>
-          </div>
+          </Card>
         </div>
       </main>
     </div>
